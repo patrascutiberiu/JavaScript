@@ -1,0 +1,112 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="formulaire.css">
+    <title>Accueil</title>
+</head>
+
+<body>
+    <fieldset id="formulaire">
+        <div id="header"><br />
+            <h1 id="profil">Compte perso DWWM</h1>
+        </div>
+
+        <label for="Nom">Nom :</label>
+        <label type="text" name="Nom" id="Nom"></label>
+        <br>
+        <label for="Prenom">Prenom :</label>
+        <label type="text" name="Prenom" id="Prenom"></label>
+        <br>
+        <label for="Ville">Ville :</label>
+        <label type="text" name="Ville" id="Ville"></label>
+        <br>
+        <label for="Ville">Date de naissance :</label>
+        <label type="text" name="Naissance" id="Naissance"></label>
+        <br>
+        <label for="Pseudo">Pseudo :</label>
+        <label type="text" name="Pseudo" id="Pseudo"></label>
+        <br>
+        <label for="NbJour">Nombre de jour(s) anniversaire :</label>
+        <label type="text" name="NbJour" id="NbJour"></label>
+    </fieldset>
+
+    <script>
+        function recoupCookie(nomKey) {
+            var params = document.cookie.split("; ");
+            let verif = false;
+            var resultat = "Indetermine";
+            //console.log(params);
+            for (let index = 0; index < params.length; index++) {
+                var tabPaire = params[index].split("=");
+                if (tabPaire[0] == nomKey) {
+                    verif = true;
+                    resultat = tabPaire[1];
+                }
+            }
+            return resultat;
+            //alert(resultat);
+        }
+        dateAnniv = new Date(recoupCookie("DateAnniv"));
+        var chaineDate = dateAnniv.getDate() + "/" + (dateAnniv.getMonth() + 1) + "/" + dateAnniv.getFullYear();
+        document.querySelector("#Nom").innerHTML = recoupCookie("Nom");
+        document.querySelector("#Prenom").innerHTML = recoupCookie("Prenom");
+        document.querySelector("#Ville").innerHTML = recoupCookie("Ville");
+        document.querySelector("#Naissance").innerHTML = chaineDate;
+        document.querySelector("#Pseudo").innerHTML = recoupCookie("Pseudo");
+
+        function nbJoursAnniv(_dateNaissance) {
+            let dateDeNaissance = new Date(_dateNaissance);
+            let dateCourante = new Date();
+            let dateAnniv = new Date(dateCourante.getFullYear(), dateDeNaissance.getMonth(), dateDeNaissance.getDate());
+            let differenceDate = dateAnniv - dateCourante;
+            let uneJournee = 24 * 60 * 60 * 1000;
+            let nbJours = Math.ceil(differenceDate / uneJournee);
+
+            if (nbJours > 0) {
+                return nbJours;
+            } else if (nbJours < 0) {
+                let dateAnniv2 = new Date(
+                    dateCourante.getFullYear() + 1,
+                    dateDeNaissance.getMonth(),
+                    dateDeNaissance.getDate()
+                );
+                let differenceDate2 = dateAnniv2 - dateCourante;
+                nbJours = Math.ceil(differenceDate2 / uneJournee);
+                return nbJours;
+            } else {
+                alert("Joyeux anniversaire ! ");
+                nbJours = 0;
+                return nbJours;
+            }
+        }
+        var dateDeNaissance = recoupCookie("DateAnniv");
+        document.querySelector("#NbJour").innerHTML = nbJoursAnniv(dateDeNaissance);
+
+        function createElement(elementParent) {
+            var element = document.createElement("h3");
+            element.id = "titre";
+            element.setAttribute("style",
+                "font-family:verdana; font-size:1.2em; font-weight:bold;margin-top:20px;margin-bottom:20px;text-align:center;"
+                );
+            element.innerHTML = "Bienvenue sur votre compte Tinder Gold : " +
+                recoupCookie("Nom") +
+                " " +
+                recoupCookie("Prenom");
+            document.getElementById(elementParent).appendChild(element);
+        }
+
+        function removeElement(elementParent, elementEnfant) {
+            var parent = document.querySelector("#" + elementParent);
+            var enfant = document.querySelector("#" + elementEnfant);
+            parent.removeChild(enfant);
+            //alert("Element "+elementEnfant+ " supprimé");
+        }
+        removeElement("header", "profil");
+        createElement("header");
+    </script>
+</body>
+
+</html>

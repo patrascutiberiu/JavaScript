@@ -1,0 +1,97 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Couleur</title>
+</head>
+
+<body>
+    <fieldset id="couleur">
+        <h1>Changement de couleurs</h1>
+
+        <input type="text" name="Rouge" id="Rouge" value="FF">
+        <button id="btnRouge" name="btnRouge">Rouge</button>
+
+        <input type="text" name="Vert" id="Vert" value="FF">
+        <button id="btnVert" name="btnVert">Vert</button>
+
+        <input type="text" name="Bleu" id="Bleu" value="FF">
+        <button id="btnBleu" name="btnBleu">Bleu</button>
+
+    </fieldset>
+
+    <script>
+        //lier les buttons avec les couleur
+        var couleurRouge = document.getElementById("btnRouge");
+        var couleurVert = document.getElementById("btnVert");
+        var couleurBleu = document.getElementById("btnBleu");
+
+        function rouge() {
+            document.getElementById("couleur").style.backgroundColor = "#FF0000";
+            document.getElementById("Rouge").value = "FF";
+            document.getElementById("Vert").value = "00";
+            document.getElementById("Bleu").value = "00";
+        }
+        couleurRouge.addEventListener("click", rouge, true);
+
+        function vert() {
+            document.getElementById("couleur").style.backgroundColor = "00FF00";
+            document.getElementById("Rouge").value = "00";
+            document.getElementById("Vert").value = "FF";
+            document.getElementById("Bleu").value = "00";
+        }
+        couleurVert.addEventListener("click", vert, true);
+
+        function bleu() {
+            document.getElementById("couleur").style.backgroundColor = "0000FF";
+            document.getElementById("Rouge").value = "00";
+            document.getElementById("Vert").value = "00";
+            document.getElementById("Bleu").value = "FF";
+        }
+
+        couleurBleu.addEventListener("click", bleu, true);
+
+        //partie background
+        function testChamp(_champs) {
+            var regexVerif = /^[0-9A-F]{2}$/i;
+            var maValeur = document.getElementById(_champs).value;
+            return regexVerif.test(maValeur);
+        }
+
+        function calculCouleur(_champs) {
+            if (testChamp(_champs)) {
+                var addCouleur = "#" +
+                    document.getElementById("Rouge").value +
+                    document.getElementById("Vert").value +
+                    document.getElementById("Bleu").value;
+
+                document.querySelector("#couleur").style.backgroundColor = addCouleur;
+
+            } else {
+                alert("Justement 2 caractéres ! ");
+                document.getElementById(_champs).focus();
+                document.getElementById(_champs).value = "";
+            }
+        }
+
+        var rouge = document.getElementById("Rouge");
+        rouge.addEventListener("blur", function () {
+            calculCouleur("Rouge");
+        }, true);
+
+        var vert = document.getElementById("Vert");
+        vert.addEventListener("blur", function () {
+            calculCouleur("Vert");
+        }, true);
+
+        var blue = document.getElementById("Blue");
+        bleu.addEventListener("blur", function () {
+            calculCouleur("Blue");
+        }, true);
+    </script>
+</body>
+
+</html>

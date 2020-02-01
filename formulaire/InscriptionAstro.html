@@ -1,0 +1,178 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="formulaire.css">
+    <title>Formulaire</title>
+</head>
+
+<body>
+
+    <form id="formulaire" method="POST" action="Accueil.html" enctype="text/plain">
+
+        <h1>Formulaire</h1>
+        <p>Votre description ...</p>
+        <textarea name="textarea" rows="10" placeholder="A vous ..."></textarea>
+        <br>
+        <label for="Nom">Nom :</label>
+        <input type="text" name="Nom" id="Nom" placeholder="Nom Utilisateur">
+        <label for="Prenom">Prenom :</label>
+        <input type="text" name="Prenom" id="Prenom" placeholder="Prenom Utilisateur">
+        <label for="Ville">Ville :</label>
+        <input type="text" name="Ville" id="Ville" placeholder="Ville Utilisateur">
+        <!-- <input type="date" name="Date" id="Date"> -->
+        <label for="DateNaissance">Votre date de naissance :</label>
+        <select name="Jour" id="Jour"></select>
+        <select name="Mois" id="Mois"></select>
+        <select name="Annee" id="Annee"></select>
+        <br>
+        <label for="Pseudo">Votre pseudo :</label>
+        <input type="text" name="Pseudo" id="Pseudo" placeholder="Pseudo" readonly>
+
+        <div class="btn">
+            <button type="button" disabled="disabled" id="Validation">Valider</button>
+            <button type="reset" id="Reset">Reset</button>
+        </div>
+
+    </form>
+
+    <script>
+        function afficheJours() {
+            var uneOption = document.createElement("Option");
+            uneOption.text = "Choissisez votre date";
+            uneOption.value = "";
+            document.querySelector("#Jour").options[0] = uneOption;
+
+            for (let index = 1; index <= 31; index++) {
+                var monOption = new Option();
+                monOption.text = index;
+                monOption.value = index;
+                document.querySelector("#Jour").options[index] = monOption;
+            }
+        }
+
+        function afficheAnnee() {
+            var uneOption = document.createElement("option");
+            uneOption.text = "Choissisez votre année";
+            uneOption.value = "";
+            document.querySelector("#Annee").options[0] = uneOption;
+            var annee = 1979;
+            var maDate = new Date();
+            monAnne = maDate.getFullYear();
+            nbAnnee = monAnne - annee;
+
+            for (let index = 1; index <= nbAnnee; index++) {
+                var monOption = new Option();
+                monOption.text = annee + index;
+                monOption.value = annee + index;
+                document.querySelector("#Annee").options[index] = monOption;
+            }
+        }
+
+        function afficheMois() {
+            var uneOption = document.createElement("option");
+            uneOption.text = "Choissisez votre mois";
+            uneOption.value = "";
+            document.querySelector("#Mois").options[0] = uneOption;
+            let tabMois = new Array();
+            tabMois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre",
+                "Octobre", "Novembre", "Décembre"
+            ];
+
+            for (let index = 0; index < tabMois.length; index++) {
+                var monOption = new Option();
+                monOption.text = tabMois[index];
+                monOption.value = index;
+                document.querySelector("#Mois").options[index + 1] = monOption;
+
+            }
+
+        }
+
+        afficheJours();
+        afficheMois();
+        afficheAnnee();
+
+        function valNum(_chaine) {
+            var chaineToMaj = _chaine.toUpperCase();
+            var somme = 0;
+            for (let index = 0; index < _chaine.length; index++) {
+                somme = somme + chaineToMaj.charCodeAt(index) - 64;
+            }
+            return somme;
+        }
+
+        function calculerSigne(mois) {
+            var signe = new Array("Verseau", "Poisson", "Belier", "Taureau", "Gémeaux", "Cancer", "Lion", "Vierge",
+                "Balance", "Scorpion", "Sagittaire", "Capricorne");
+            //var retourSigne = signe[mois - 1];
+            return signe[mois];
+        }
+
+        function formOk() {
+            var prenom = document.querySelector("#Prenom").value;
+            var nom = document.querySelector("#Nom").value;
+            var ville = document.querySelector("#Ville").value;
+            var jour = document.querySelector("#Jour").value;
+            var mois = document.querySelector("#Mois").value;
+            var annee = document.querySelector("#Annee").value;
+
+            var verif = false;
+            if (prenom != "" && nom != "" && ville != "" && jour != "" && mois != "" && annee != "") {
+                verif = true;
+                //document.getElementById("Validation").disabled= false;
+            }
+
+            return verif;
+        }
+
+        function newCookie(key, value) {
+            var dateDuJour = new Date();
+            var duree = dateDuJour.getTime();
+            duree += 24 * 60 * 60 * 1000;
+            dateDuJour.setTime(duree);
+            // var date_expiration = new Date(dateDuJour.getFullYear() + dateDuJour.getMonth() + dateDuJour.getDay(),
+            //     dateDuJour.getHours() + 1);
+            document.cookie = key + "=" + value + "; expires=" + dateDuJour.toGMTString();
+        }
+
+        function calculerPseudo() {
+            let test = formOk();
+
+            if (test == true) {
+                document.getElementById("Validation").disabled = false;
+
+                var nombre = valNum(document.querySelector("#Nom").value) +
+                    valNum(document.querySelector("#Prenom").value) +
+                    valNum(document.querySelector("#Ville").value);
+
+                var pseudo = calculerSigne(document.querySelector("#Mois").value) + nombre;
+
+                document.getElementById("Pseudo").value = pseudo;
+            }
+        }
+
+        document.querySelector("#Prenom").addEventListener("blur", calculerPseudo);
+        document.querySelector("#Nom").addEventListener("blur", calculerPseudo);
+        document.querySelector("#Ville").addEventListener("blur", calculerPseudo);
+        document.querySelector("#Jour").addEventListener("blur", calculerPseudo);
+        document.querySelector("#Mois").addEventListener("blur", calculerPseudo);
+        document.querySelector("#Annee").addEventListener("blur", calculerPseudo);
+        document.querySelector("#Validation").addEventListener("click", function () {
+            newCookie("Nom", document.getElementById("Nom").value);
+            newCookie("Prenom", document.getElementById("Prenom").value);
+            newCookie("Ville", document.getElementById("Ville").value);
+            var maDateAnniv = new Date(document.getElementById("Annee").value,
+                document.getElementById("Mois").value,
+                document.getElementById("Jour").value);
+            newCookie("DateAnniv", maDateAnniv);
+            newCookie("Pseudo", document.getElementById("Pseudo").value);
+            document.getElementById("formulaire").submit();
+        });
+    </script>
+
+</body>
+
+</html>

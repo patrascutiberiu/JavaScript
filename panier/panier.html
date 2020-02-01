@@ -1,0 +1,44 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Panier</title>
+</head>
+<body>
+    <fieldset class="panier">
+        <legend>Panier</legend>
+
+        <label for="">Qté : </label>
+        <input type="text" name="quantite1" id="quantite1" value="1">
+
+        <label for="">Prix unitaire : </label>
+        <input type="text" name="prix1" id="prix1" value="0">
+
+        <label for="">Prix : </label>
+        <input type="text" name="prixT1" id="prixT1" value="0" readonly>
+
+        <br>
+
+        <label for="">Qté : </label>
+        <input type="text" name="quantite2" id="quantite2" value="1">
+
+        <label for="">Prix unitaire : </label>
+        <input type="text" name="prix2" id="prix2" value="0">
+
+        <label for="">Prix : </label>
+        <input type="text" name="prixT2" id="prixT2" value="0" readonly>
+
+        <br>
+
+        <div id="total">
+            <label for="">Total TTC (€) : </label>
+            <input type="text" name="" value="0" id="totalPrix" readonly>
+        </div>
+    </fieldset>
+
+    <script src="script.js"></script>
+</body>
+</html>

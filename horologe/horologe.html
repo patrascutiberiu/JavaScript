@@ -1,0 +1,68 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <link rel="stylesheet" href="horologe.css">
+
+    <title>Horologe</title>
+</head>
+
+<body onload="alert('Bonjour !');" onunload="alert('Au revoir !');">
+
+    <fieldset id="horologe">
+        <h1>Horologe</h1>
+        <input type="text" name="Date" id="Date" placeholder="Votre date">
+        <button type="submit" name="btnDate" id="btnDate">Date</button>
+        <input type="text" name="Heure" id="Heure" placeholder="Votre heure">
+        <button type="submit" name="btnHeure" id="btnHeure">Heure</button>
+        <button type="submit" id="btnStop">Stop</button>
+    </fieldset>
+
+    <script>
+        function affichageDate() {
+
+            var maDate = new Date();
+            var annee = maDate.getFullYear();
+            var mois = maDate.getMonth() + 1;
+            var jour = maDate.getDate();
+
+            (mois < 10) ? mois = "0" + mois: mois;
+            (jour < 10) ? jour = "0" + jour: jour;
+
+            document.getElementById("Date").value = jour + "/" + mois + "/" + annee;
+        }
+
+        var clickDate = document.getElementById("btnDate");
+
+        clickDate.addEventListener("click", affichageDate);
+
+        var timer;
+
+        function affichageHeure() {
+
+            var maDate = new Date();
+            var heure = ((maDate.getHours() < 10) ? "0" : "") + maDate.getHours();
+            var minute = ((maDate.getMinutes() < 10) ? "0" : "") + maDate.getMinutes();
+            var secounde = ((maDate.getSeconds() < 10) ? "0" : "") + maDate.getSeconds();
+
+            var total = heure + ":" + minute + ":" + secounde;
+            document.getElementById("Heure").value = total;
+
+            timer = setTimeout("affichageHeure()", 1000);
+        }
+
+        var clickHeure = document.getElementById("btnHeure");
+        clickHeure.addEventListener("click", affichageHeure, true);
+        // document.getElementByName("bntHeure")[0].addEventListener("click", affichageDate, true);
+
+        function stopTimer() {
+            clearTimeout(timer);
+        }
+
+        var stopTime = document.getElementById("btnStop");
+        stopTime.addEventListener("click", stopTimer, true);
+    </script>
+</body>
+
+</html>
