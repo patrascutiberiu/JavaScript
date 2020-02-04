@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Partie II - Chapitre 2 - Exemple 8</title>
+</head>
+
+<body>
+    <div>
+        <p id="myP">Un peu de texte <a>et un lien</a></p>
+
+    </div>
+
+    <script>
+        
+        // On va cloner un élément créé :
+        var hr1 = document.createElement('hr');
+        var hr2 = hr1.cloneNode(false); // Il n'a pas d'enfants...
+
+        // Ici, on clone un élément existant :
+        var paragraph1 = document.getElementById('myP');
+        var paragraph2 = paragraph1.cloneNode(true);
+
+        // Et attention, l'élément est cloné, mais pas "inséré" tant que l'on n'a pas appelé appendChild() :
+        paragraph1.parentNode.appendChild(paragraph2);
+
+
+
+        // On va cloner un élément créé :
+        var hr1 = document.createElement('hr');
+        var hr2 = hr1.cloneNode(false); // Il n'a pas d'enfants…
+
+        // Ici, on clone un élément existant :
+        var paragraph1 = document.getElementById('myP');
+        var paragraph2 = paragraph1.cloneNode(true);
+
+        // Et attention, l'élément est cloné, mais pas « inséré » tant que l'on n'a pas appelé appendChild() :
+        paragraph1.parentNode.appendChild(paragraph2);
+
+
+        //remplacer un element
+        var link = document.querySelector('a');
+        var newLabel = document.createTextNode('et un hyperlien');
+
+        link.replaceChild(newLabel, link.firstChild);
+
+
+        //supprimer un element
+        var link = document.querySelector('a');
+
+        link.parentNode.removeChild(link);
+
+
+
+        var link = document.querySelector('a');
+
+        var oldLink = link.parentNode.removeChild(link); // On supprime l'élément et on le garde en stock
+
+        document.body.appendChild(oldLink); // On réintègre ensuite l'élément supprimé où on veut et quand on veut
+
+
+        //Vérifier la présence d'éléments enfants
+        var paragraph = document.querySelector('p');
+
+        alert(paragraph.hasChildNodes()); // Affiche true
+
+
+        //Insérer à la bonne place
+        var paragraph = document.querySelector('p');
+        var emphasis = document.createElement('em'),
+            emphasisText = document.createTextNode(' en emphase légère ');
+
+        emphasis.appendChild(emphasisText);
+
+        paragraph.insertBefore(emphasis, paragraph.lastChild);
+
+
+        //fuction pour inserer un element apres un autre 
+        function insertAfter(newElement, afterElement) {
+            var parent = afterElement.parentNode;
+
+            if (parent.lastChild ===
+                afterElement
+            ) { // Si le dernier élément est le même que l'élément après lequel on veut insérer, il suffit de faire appendChild()
+                parent.appendChild(newElement);
+            } else { // Dans le cas contraire, on fait un insertBefore() sur l'élément suivant
+                parent.insertBefore(newElement, afterElement.nextSibling);
+            }
+
+        }
+
+        insertAfter(emphasis, paragraph);
+
+
+
+
+        // On crée l'élément conteneur
+        var mainDiv = document.createElement('div');
+        mainDiv.id = 'divTP2';
+
+        // On crée tous les nœuds textuels, pour plus de facilité
+        var languages = [
+            document.createTextNode('JavaScript'),
+            document.createTextNode('JScript'),
+            document.createTextNode('ActionScript'),
+            document.createTextNode('EX4')
+        ];
+
+        // On crée le paragraphe
+        var paragraph = document.createElement('p');
+        var paragraphText = document.createTextNode('Langages basés sur ECMAScript :');
+        paragraph.appendChild(paragraphText);
+
+
+        // On crée la liste, et on boucle pour ajouter chaque item
+        var uList = document.createElement('ul'),
+            uItem;
+
+        for (var i = 0, c = languages.length; i < c; i++) {
+            uItem = document.createElement('li');
+
+            uItem.appendChild(languages[i]);
+            uList.appendChild(uItem);
+        }
+
+        // On insère le tout dans mainDiv
+        mainDiv.appendChild(paragraph);
+        mainDiv.appendChild(uList);
+
+        // On insère mainDiv dans le <body>
+        document.body.appendChild(mainDiv);
+
+
+
+
+        // On crée l'élément conteneur
+        var mainDiv = document.createElement('div');
+        mainDiv.id = 'divTP3';
+
+        // On place le texte dans des objets, eux-mêmes placés dans un tableau
+        // Par facilité, la création des nœuds textuels se fera dans la boucle
+        var languages = [{
+            t: 'JavaScript',
+            d: 'JavaScript est un langage de programmation de scripts principalement utilisé dans les pages web interactives mais aussi coté serveur.'
+        }, {
+            t: 'JScript',
+            d: 'JScript est le nom générique de plusieurs implémentations d\'ECMAScript 3 créées par Microsoft.'
+        }, {
+            t: 'ActionScript',
+            d: 'ActionScript est le langage de programmation utilisé au sein d\'applications clientes (Adobe Flash, Adobe Flex) et serveur (Flash media server, JRun, Macromedia Generator).'
+        }, {
+            t: 'EX4',
+            d: 'ECMAScript for XML (E4X) est une extension XML au langage ECMAScript.'
+        }];
+
+        // On crée le paragraphe
+        var paragraph = document.createElement('p');
+        var paragraphText = document.createTextNode('Langages basés sur ECMAScript :');
+        paragraph.appendChild(paragraphText);
+
+
+        // On crée la liste, et on boucle pour ajouter chaque item
+        var defList = document.createElement('dl'),
+            defTerm, defTermText,
+            defDefn, defDefnText;
+
+        for (var i = 0, c = languages.length; i < c; i++) {
+            defTerm = document.createElement('dt');
+            defDefn = document.createElement('dd');
+
+            defTermText = document.createTextNode(languages[i].t);
+            defDefnText = document.createTextNode(languages[i].d);
+
+            defTerm.appendChild(defTermText);
+            defDefn.appendChild(defDefnText);
+
+            defList.appendChild(defTerm);
+            defList.appendChild(defDefn);
+        }
+
+        // On insère le tout dans mainDiv
+        mainDiv.appendChild(paragraph);
+        mainDiv.appendChild(defList);
+
+        // On insère mainDiv dans le <body>
+        document.body.appendChild(mainDiv);
+
+
+
+        // On crée l'élément conteneur
+        var mainDiv = document.createElement('div');
+        mainDiv.id = 'divTP4';
+
+        // Création de la structure du formulaire
+        var form = document.createElement('form');
+        var fieldset = document.createElement('fieldset');
+        var legend = document.createElement('legend'),
+            legendText = document.createTextNode('Uploader une image');
+        var center = document.createElement('div');
+
+        form.action = 'upload.php';
+        form.enctype = 'multipart/form-data';
+        form.method = 'post';
+
+        center.setAttribute('style', 'text-align: center');
+
+        legend.appendChild(legendText);
+
+        fieldset.appendChild(legend);
+        fieldset.appendChild(center);
+
+        form.appendChild(fieldset);
+
+        // Création des champs
+        var label = document.createElement('label'),
+            labelText = document.createTextNode('Image à uploader :');
+        var input = document.createElement('input');
+        var br = document.createElement('br');
+        var submit = document.createElement('input');
+
+        input.type = 'file';
+        input.id = 'inputUpload';
+        input.name = input.id;
+
+        submit.type = 'submit';
+        submit.value = 'Envoyer';
+
+        label.htmlFor = 'inputUpload';
+        label.appendChild(labelText);
+
+        center.appendChild(label);
+        center.appendChild(input);
+        center.appendChild(br);
+        center.appendChild(br.cloneNode(false)); // On clone, pour mettre un deuxième <br />
+        center.appendChild(submit);
+
+        // On insère le formulaire dans mainDiv
+        mainDiv.appendChild(form);
+
+        // On insère mainDiv dans le <body>
+        document.body.appendChild(mainDiv);
+
+
+    </script>
+</body>
+
+</html>

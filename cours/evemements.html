@@ -1,0 +1,85 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Evenements</title>
+</head>
+
+<body>
+
+
+    <span onclick="alert('Hello !');">Cliquez-moi !</span>
+
+    <hr>
+
+    <span onclick="alert('Voici le contenu de l\'élément que vous avez cliqué :\n\n' + this.innerHTML);">Cliquez-moi
+        !</span>
+
+
+    <hr>
+
+    <input id="input" type="text" size="50" value="Cliquez ici !"
+        onfocus="this.value='Appuyez maintenant sur votre touche de tabulation.';"
+        onblur="this.value='Cliquez ici !';" />
+    <br /><br />
+    <a href="#"
+        onfocus="document.getElementById('input').value = 'Vous avez maintenant le focus sur le lien, bravo !';">Un
+        lien</a>
+
+    <hr>
+
+
+    <!-- le return false;sert juste à bloquer l'action par défaut de l'événement qui le déclenche. -->
+    <a href="http://www.google.fr" onclick="alert('Vous avez cliqué !');">Cliquez-moi !</a>
+
+
+    <hr>
+
+    <span id="clickme">Cliquez-moi !</span>
+
+
+    <p id="result"></p>
+
+    <div id="parent1">
+        Parent
+        <div id="child1">Enfant N°1</div>
+        <div id="child2">Enfant N°2</div>
+    </div>
+
+
+    <hr>
+    <a id="link" href="http://www.siteduzero.com">Cliquez-moi !</a>
+
+    <script>
+        var element = document.getElementById('clickme');
+
+        element.addEventListener('click', function () {
+            alert("Vous m'avez cliqué !");
+        });
+
+        element.addEventListener('click', function (
+            e) { // L'argument « e » va récupérer une référence vers l'objet « Event »
+            alert(e.type); // Ceci affiche le type de l'événement (click, mouseover, etc.)
+        });
+
+
+        var parent1 = document.getElementById('parent1'),
+            result = document.getElementById('result');
+
+        parent1.addEventListener('mouseover', function (e) {
+            result.innerHTML = "L'élément déclencheur de l'événement \"mouseover\" possède l'ID : " + e.target
+                .id;
+        });
+
+        var link = document.getElementById('link');
+
+link.addEventListener('click', function(e) {
+    e.preventDefault(); // On bloque l'action par défaut de cet événement
+    alert('Vous avez cliqué !');
+});
+    </script>
+</body>
+
+</html>
